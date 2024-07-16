@@ -82,7 +82,7 @@ function App() {
 
   return (
     <div>
-      <Header title="Univers" />
+      <Header title="Universty" />
       <AddItem
         newItem={newItem}
         setNewItem={setNewItem}
