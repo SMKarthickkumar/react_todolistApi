@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { FaTrash } from "react-icons/fa"
+
+import ItemList from "./ItemList"
 
 
-const Content = () => {
+const Content = ({state, handleClick, handleDeleteClick}) => {
 
 //#region
   //  function getRandomName(){
@@ -31,33 +31,7 @@ const Content = () => {
     // }
 //#endregion
 
-  const [state, setState] = useState(
-    [
-      {
-        id: 1, checked : true, comment: "practice test-1"
-      },
-      {
-        id: 2, checked : false, comment: "practice test-2"
-      },
-      {
-        id: 3, checked : true, comment: "practice test-3"
-      }
-    ]
-  )
-
-  const handleClick = (id) => {
-    const listItem = state.map((item) => (
-      item.id === id ? {...item, checked : !item.checked} : item
-    ))
-    setState(listItem);
-    localStorage.setItem("todo_list", JSON.stringify(listItem));
-  }
-
-  const handleDeleteClick = (id) => {
-    const listItem = state.filter((item)=> item.id !== id);
-    setState(listItem);
-    localStorage.setItem("todo_list", JSON.stringify(listItem));
-  }
+  
 
   return (
     <main>
@@ -68,30 +42,15 @@ const Content = () => {
         <button style={{width: '10%'}} onClick={IncrementFunction}> + </button><br></br>
         <button style={{width: '10%'}} onClick={DecrementFunction}> - </button> */}
         {(state.length) ? (
-          <ul>
-            {state.map((item) => (
-              <li className='item' key={item.id}>
-                <input
-                    type='checkbox'
-                    checked={item.checked}
-                    onChange={() => handleClick(item.id)}
-                ></input>
-                <label
-                style={(item.checked) ? 
-                {textDecoration: 'line-through'} : null}
-                onDoubleClick={() => handleClick(item.id)}
-                >{item.comment}</label>                
-                <FaTrash 
-                  role='button'
-                  tabIndex="0"
-                  onClick={() => handleDeleteClick(item.id)}
-                />
-              </li>
-            ))}
-          </ul>
+            <ItemList
+              state={state}
+              handleClick={handleClick}
+              handleDeleteClick={handleDeleteClick}
+            />
         ) : (
-          <p> Your list is Empty</p>
-        )}
+          <p style={{marginTop: '4rem'}}> Your list is Empty</p>
+        )
+        }
        
     </main>
   )
